@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const ProjectCard = ({ title, tech, description, highlights, link, index }) => {
+const ProjectCard = ({ title, tech, description, highlights, link, buttonText, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -54,7 +54,7 @@ const ProjectCard = ({ title, tech, description, highlights, link, index }) => {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-2xl bg-white text-black font-bold text-sm hover:bg-[#10b981] hover:text-white transition-all duration-300 transform group-hover:scale-[1.01] shadow-lg"
         >
-          View Dashboard
+          {buttonText || "View Project"}
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
@@ -71,6 +71,30 @@ const ProjectCard = ({ title, tech, description, highlights, link, index }) => {
 const Projects = () => {
   const projectList = [
     {
+      title: "RVR Spatia — Architecture & Interior Studio",
+      tech: ["React.js", "Tailwind CSS", "Framer Motion", "3D Visualization", "Web Design"],
+      description: "A high-end architectural & spatial design studio web application engineered to showcase luxury residential, commercial, and cultural environments.",
+      highlights: [
+        "Interactive 5-stage architectural methodology & High-Definition 3D spatial previews.",
+        "Smooth micro-interactions and responsive luxury aesthetic tailored for architecture clients.",
+        "Integrated consultation request pipelines and multi-category project showcases."
+      ],
+      link: "https://rvrspatia.com/",
+      buttonText: "Visit RVR Spatia"
+    },
+    {
+      title: "SRR Solutions — AI & Software Agency",
+      tech: ["React.js", "Node.js", "AI Agents", "Workflow Automation", "Tailwind CSS"],
+      description: "An AI and custom software agency platform featuring AI Agent integrations, process automation showcases, and industry-specific digital solutions.",
+      highlights: [
+        "Showcases custom AI agents, automated workflow pipelines, and enterprise SaaS solutions.",
+        "Designed responsive interactive service cards and seamless strategy call booking systems.",
+        "Engineered for high performance, accessibility, and modern UI micro-animations."
+      ],
+      link: "https://srrsolutions.io/",
+      buttonText: "Visit SRR Solutions"
+    },
+    {
       title: "Learning Management System (LearnHub)",
       tech: ["MongoDB", "Express.js", "React.js", "Node.js", "Redux", "Vercel"],
       description: "A comprehensive full-stack learning platform engineered with secure authentication, course management, student dashboards, and a robust progress tracking framework.",
@@ -79,7 +103,8 @@ const Projects = () => {
         "Delivered a 25% boost in course completion rates through interactive milestones.",
         "Engineered a scalable system architecture supporting 1,000+ concurrent active users with 99.9% uptime."
       ],
-      link: "https://learning-management-system-frontend-sigma.vercel.app/Dashboard"
+      link: "https://learning-management-system-frontend-sigma.vercel.app/Dashboard",
+      buttonText: "View Dashboard"
     },
     {
       title: "Rice Plant Disease Detection Model",
@@ -129,6 +154,7 @@ const Projects = () => {
               description={project.description}
               highlights={project.highlights}
               link={project.link}
+              buttonText={project.buttonText}
             />
           ))}
         </div>
