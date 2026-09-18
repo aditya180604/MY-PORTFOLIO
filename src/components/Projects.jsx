@@ -1,49 +1,91 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const ProjectCard = ({ title, tech, description, highlights, link, buttonText, index }) => {
+const ProjectCard = ({ title, tech, description, highlights, link, buttonText, isLive, featured, metrics, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-      className="bg-[#111111] border border-gray-800 rounded-3xl p-8 flex flex-col justify-between hover:border-[#10b981]/50 hover:shadow-[0_20px_50px_rgba(16,185,129,0.08)] transition-all duration-500 relative group min-h-[420px]"
+      className={`bg-[#111111] border border-gray-800 rounded-3xl p-8 md:p-10 flex flex-col justify-between hover:border-[#10b981]/50 hover:shadow-[0_20px_50px_rgba(16,185,129,0.08)] transition-all duration-500 relative group min-h-[420px] ${
+        featured ? 'md:col-span-2 border-emerald-900/40 bg-gradient-to-b from-[#121c17] to-[#111111]' : ''
+      }`}
     >
       {/* Glow Effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none" />
+      <div className={`absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none ${
+        featured ? 'from-emerald-500/10' : ''
+      }`} />
 
       <div>
-        {/* Technology Badges */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {tech.map((t, idx) => (
-            <span key={idx} className="bg-gray-900 border border-gray-800 text-gray-300 text-[10px] font-mono tracking-wider font-bold px-3 py-1 rounded-full uppercase">
-              {t}
+        {/* Technology Badges & Live Status */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div className="flex flex-wrap gap-2">
+            {tech.map((t, idx) => (
+              <span key={idx} className="bg-gray-900 border border-gray-800 text-gray-300 text-[10px] font-mono tracking-wider font-bold px-3 py-1 rounded-full uppercase">
+                {t}
+              </span>
+            ))}
+          </div>
+          {isLive && (
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[#10b981] text-[11px] font-mono font-bold tracking-wider uppercase shadow-[0_0_15px_rgba(16,185,129,0.15)] shrink-0">
+              <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+              Live Platform
             </span>
-          ))}
+          )}
         </div>
 
         {/* Project Title */}
-        <h3 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight leading-tight group-hover:text-[#10b981] transition-colors duration-300">
+        <h3 className={`font-black text-white mb-4 tracking-tight leading-tight group-hover:text-[#10b981] transition-colors duration-300 ${
+          featured ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-2xl md:text-3xl'
+        }`}>
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-gray-400 text-sm md:text-base leading-relaxed font-medium mb-8">
+        <p className={`text-gray-400 leading-relaxed font-medium mb-8 ${
+          featured ? 'text-sm md:text-base lg:text-lg max-w-4xl' : 'text-sm md:text-base'
+        }`}>
           {description}
         </p>
 
-        {/* Highlights/Metrics List */}
-        <ul className="space-y-3 mb-8">
-          {highlights.map((highlight, idx) => (
-            <li key={idx} className="flex items-start gap-2.5 text-xs md:text-sm font-semibold text-gray-300 leading-snug">
-              <svg className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-              </svg>
-              <span>{highlight}</span>
-            </li>
-          ))}
-        </ul>
+        {/* Highlights & Optional Metrics */}
+        {featured && metrics ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8 items-center">
+            <div className="lg:col-span-7">
+              <ul className="space-y-3">
+                {highlights.map((highlight, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-xs md:text-sm font-semibold text-gray-300 leading-snug">
+                    <svg className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="lg:col-span-5 grid grid-cols-3 gap-3">
+              {metrics.map((m, idx) => (
+                <div key={idx} className="bg-black/40 border border-gray-800/80 rounded-2xl p-4 flex flex-col items-center text-center">
+                  <span className="text-xl sm:text-2xl font-black text-[#10b981] tracking-tight">{m.value}</span>
+                  <span className="text-[11px] font-mono text-gray-400 uppercase mt-1 leading-tight">{m.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <ul className="space-y-3 mb-8">
+            {highlights.map((highlight, idx) => (
+              <li key={idx} className="flex items-start gap-2.5 text-xs md:text-sm font-semibold text-gray-300 leading-snug">
+                <svg className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Action Button */}
@@ -52,7 +94,9 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-2xl bg-white text-black font-bold text-sm hover:bg-[#10b981] hover:text-white transition-all duration-300 transform group-hover:scale-[1.01] shadow-lg"
+          className={`inline-flex items-center justify-center gap-2 rounded-2xl bg-white text-black font-bold text-sm hover:bg-[#10b981] hover:text-white transition-all duration-300 transform group-hover:scale-[1.01] shadow-lg ${
+            featured ? 'w-full md:w-auto md:px-10 py-4 self-start' : 'w-full px-6 py-3.5'
+          }`}
         >
           {buttonText || "View Project"}
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,6 +115,25 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
 const Projects = () => {
   const projectList = [
     {
+      title: "JobHuntt — Freshers & Off-Campus Careers Portal",
+      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "RESTful APIs"],
+      description: "A high-impact, live production web platform engineered specifically for engineering graduates and freshers across India to discover verified off-campus recruitment drives, paid internships, and entry-level IT roles.",
+      highlights: [
+        "100% Verified Direct Applications: Connects job seekers directly to official MNC and startup career portals with zero intermediary fees or misleading redirects.",
+        "Precision Batch Filtering: Implemented custom query filters tailored for 2024, 2025, 2026, and 2027 batch graduates across Software, Internships, Walk-ins, and Remote roles.",
+        "Community & Real-Time Alerts: Integrated instant update pipelines and WhatsApp notification channels serving a community of 45,000+ registered aspiring candidates."
+      ],
+      metrics: [
+        { value: "45K+", label: "Freshers Reach" },
+        { value: "2024-27", label: "Batches" },
+        { value: "100%", label: "Direct Links" }
+      ],
+      link: "https://www.jobhuntt.in/",
+      buttonText: "Explore JobHuntt.in",
+      isLive: true,
+      featured: true
+    },
+    {
       title: "RVR Spatia — Architecture & Interior Studio",
       tech: ["React.js", "Tailwind CSS", "Framer Motion", "3D Visualization", "Web Design"],
       description: "A high-end architectural & spatial design studio web application engineered to showcase luxury residential, commercial, and cultural environments.",
@@ -80,7 +143,8 @@ const Projects = () => {
         "Integrated consultation request pipelines and multi-category project showcases."
       ],
       link: "https://rvrspatia.com/",
-      buttonText: "Visit RVR Spatia"
+      buttonText: "Visit RVR Spatia",
+      isLive: true
     },
     {
       title: "SRR Solutions — AI & Software Agency",
@@ -92,7 +156,8 @@ const Projects = () => {
         "Engineered for high performance, accessibility, and modern UI micro-animations."
       ],
       link: "https://srrsolutions.io/",
-      buttonText: "Visit SRR Solutions"
+      buttonText: "Visit SRR Solutions",
+      isLive: true
     },
     {
       title: "Learning Management System (LearnHub)",
@@ -138,7 +203,7 @@ const Projects = () => {
               Featured <span className="text-[#10b981]">Projects</span>
             </h2>
             <p className="text-gray-400 text-sm md:text-base max-w-sm font-medium leading-relaxed">
-              A collection of systems and machine learning projects I have built, showcasing full-stack capabilities and problem-solving skills.
+              A collection of live production platforms, full-stack systems, and machine learning models showcasing engineering precision and real-world impact.
             </p>
           </div>
         </div>
@@ -155,6 +220,9 @@ const Projects = () => {
               highlights={project.highlights}
               link={project.link}
               buttonText={project.buttonText}
+              isLive={project.isLive}
+              featured={project.featured}
+              metrics={project.metrics}
             />
           ))}
         </div>
