@@ -8,13 +8,15 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-      className={`bg-[#111111] border border-gray-800 rounded-3xl p-8 md:p-10 flex flex-col justify-between hover:border-[#10b981]/50 hover:shadow-[0_20px_50px_rgba(16,185,129,0.08)] transition-all duration-500 relative group min-h-[420px] ${
-        featured ? 'md:col-span-2 border-emerald-900/40 bg-gradient-to-b from-[#121c17] to-[#111111]' : ''
+      className={`rounded-3xl p-8 md:p-10 flex flex-col justify-between transition-all duration-500 relative group min-h-[420px] backdrop-blur-xl ${
+        featured
+          ? 'md:col-span-2 bg-gradient-to-b from-[#0d1a14]/90 via-[#0a130f]/85 to-[#080d0b]/90 border border-emerald-500/30 hover:border-emerald-400/60 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_25px_70px_rgba(16,185,129,0.18)]'
+          : 'bg-[#090e0c]/85 border border-emerald-950/70 hover:border-emerald-500/40 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.7)] hover:shadow-[0_20px_50px_rgba(16,185,129,0.1)]'
       }`}
     >
       {/* Glow Effect */}
-      <div className={`absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none ${
-        featured ? 'from-emerald-500/10' : ''
+      <div className={`absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none ${
+        featured ? 'from-emerald-400/15' : ''
       }`} />
 
       <div>
@@ -22,14 +24,14 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <div className="flex flex-wrap gap-2">
             {tech.map((t, idx) => (
-              <span key={idx} className="bg-gray-900 border border-gray-800 text-gray-300 text-[10px] font-mono tracking-wider font-bold px-3 py-1 rounded-full uppercase">
+              <span key={idx} className="bg-emerald-950/40 border border-emerald-500/20 text-emerald-300 text-[10px] font-mono tracking-wider font-bold px-3 py-1 rounded-full uppercase backdrop-blur-sm group-hover:border-emerald-500/40 transition-colors">
                 {t}
               </span>
             ))}
           </div>
           {isLive && (
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[#10b981] text-[11px] font-mono font-bold tracking-wider uppercase shadow-[0_0_15px_rgba(16,185,129,0.15)] shrink-0">
-              <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-[#10b981] text-[11px] font-mono font-bold tracking-wider uppercase shadow-[0_0_20px_rgba(16,185,129,0.25)] shrink-0">
+              <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse shadow-[0_0_8px_#10b981]"></span>
               Live Platform
             </span>
           )}
@@ -43,7 +45,7 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
         </h3>
 
         {/* Description */}
-        <p className={`text-gray-400 leading-relaxed font-medium mb-8 ${
+        <p className={`text-gray-300/90 leading-relaxed font-medium mb-8 ${
           featured ? 'text-sm md:text-base lg:text-lg max-w-4xl' : 'text-sm md:text-base'
         }`}>
           {description}
@@ -67,7 +69,7 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
 
             <div className="lg:col-span-5 grid grid-cols-3 gap-3">
               {metrics.map((m, idx) => (
-                <div key={idx} className="bg-black/40 border border-gray-800/80 rounded-2xl p-4 flex flex-col items-center text-center">
+                <div key={idx} className="bg-black/60 border border-emerald-500/20 backdrop-blur-md rounded-2xl p-4 flex flex-col items-center text-center shadow-inner group-hover:border-emerald-500/40 transition-colors">
                   <span className="text-xl sm:text-2xl font-black text-[#10b981] tracking-tight">{m.value}</span>
                   <span className="text-[11px] font-mono text-gray-400 uppercase mt-1 leading-tight">{m.label}</span>
                 </div>
@@ -104,7 +106,7 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
           </svg>
         </a>
       ) : (
-        <div className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-2xl bg-gray-900 border border-gray-800 text-gray-400 font-bold text-sm cursor-default select-none">
+        <div className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-2xl bg-emerald-950/20 border border-emerald-500/20 text-gray-400 font-bold text-sm cursor-default select-none">
           Local / ML Model
         </div>
       )}
@@ -207,23 +209,125 @@ const Projects = () => {
   return (
     <section 
       id="projects" 
-      className="bg-[#0e0e0e] text-white pt-32 pb-32 px-6 md:px-12 w-full relative overflow-hidden font-sans border-t border-gray-900 bg-[radial-gradient(#8080800d_1px,transparent_1px)] bg-[size:32px_32px]"
+      className="bg-[#050806] text-white pt-36 pb-36 px-6 md:px-12 w-full relative overflow-hidden font-sans border-t border-emerald-950/40"
     >
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-950/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+      {/* Top Edge Gradient Divider & Radiant Glow */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#10b981]/50 to-transparent z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-56 bg-gradient-to-b from-emerald-500/15 via-emerald-500/5 to-transparent blur-3xl pointer-events-none z-0" />
+
+      {/* Dynamic Animated Ambient Glow Orbs */}
+      <motion.div
+        animate={{
+          x: [0, 40, -30, 0],
+          y: [0, -35, 25, 0],
+          scale: [1, 1.15, 0.95, 1],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-12 left-[-6%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-emerald-600/15 via-teal-500/10 to-transparent blur-[140px] pointer-events-none z-0"
+      />
+
+      <motion.div
+        animate={{
+          x: [0, -45, 35, 0],
+          y: [0, 45, -30, 0],
+          scale: [1, 1.1, 0.9, 1],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-1/3 right-[-8%] w-[650px] h-[650px] rounded-full bg-gradient-to-bl from-emerald-500/15 via-cyan-500/10 to-transparent blur-[150px] pointer-events-none z-0"
+      />
+
+      <motion.div
+        animate={{
+          x: [0, 35, -40, 0],
+          y: [0, -30, 35, 0],
+          scale: [1, 1.12, 0.92, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute bottom-16 left-[20%] w-[700px] h-[700px] rounded-full bg-gradient-to-r from-emerald-800/10 via-teal-700/10 to-transparent blur-[160px] pointer-events-none z-0"
+      />
+
+      {/* High-Precision Cyber Grid */}
+      <div 
+        className="absolute inset-0 bg-[linear-gradient(to_right,rgba(16,185,129,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(16,185,129,0.06)_1px,transparent_1px)] bg-[size:56px_56px] pointer-events-none z-0"
+        style={{
+          maskImage: 'radial-gradient(ellipse 85% 70% at 50% 45%, black 50%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 85% 70% at 50% 45%, black 50%, transparent 100%)'
+        }}
+      />
+      
+      {/* Dot Matrix Intersection Grid */}
+      <div 
+        className="absolute inset-0 bg-[radial-gradient(rgba(16,185,129,0.15)_1.5px,transparent_1.5px)] bg-[size:56px_56px] pointer-events-none z-0"
+        style={{
+          maskImage: 'radial-gradient(ellipse 80% 65% at 50% 45%, black 40%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 65% at 50% 45%, black 40%, transparent 100%)'
+        }}
+      />
+
+      {/* Giant Ambient Typographic Watermark */}
+      <div className="absolute top-24 left-1/2 -translate-x-1/2 text-[19vw] font-black uppercase text-emerald-400/[0.025] tracking-tighter select-none pointer-events-none whitespace-nowrap z-0 blur-[0.5px]">
+        PROJECTS
+      </div>
+
+      {/* Floating Constellation Sparks */}
+      {[
+        { top: '14%', left: '12%', size: 3.5, duration: 7, delay: 0 },
+        { top: '22%', left: '86%', size: 4, duration: 9, delay: 1.5 },
+        { top: '38%', left: '6%', size: 3, duration: 8, delay: 3 },
+        { top: '55%', left: '92%', size: 3.5, duration: 10, delay: 2 },
+        { top: '72%', left: '16%', size: 4, duration: 8.5, delay: 4 },
+        { top: '88%', left: '80%', size: 3, duration: 11, delay: 0.5 },
+        { top: '48%', left: '48%', size: 3, duration: 7.5, delay: 2.5 },
+      ].map((spark, i) => (
+        <motion.div
+          key={i}
+          animate={{
+            y: [0, -28, 0],
+            opacity: [0.25, 0.85, 0.25],
+            scale: [0.8, 1.25, 0.8]
+          }}
+          transition={{
+            duration: spark.duration,
+            repeat: Infinity,
+            delay: spark.delay,
+            ease: "easeInOut"
+          }}
+          style={{
+            top: spark.top,
+            left: spark.left,
+            width: `${spark.size}px`,
+            height: `${spark.size}px`,
+          }}
+          className="absolute rounded-full bg-emerald-400 shadow-[0_0_12px_#10b981] pointer-events-none z-0"
+        />
+      ))}
 
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Section Header */}
         <div data-aos="fade-up" className="mb-20">
-          <div className="inline-block border border-gray-800 rounded-full px-5 py-1.5 text-xs text-[#10b981] font-bold tracking-widest uppercase mb-6 shadow-md bg-[#111111]/80 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 border border-emerald-500/30 rounded-full px-5 py-1.5 text-xs text-[#10b981] font-bold tracking-widest uppercase mb-6 shadow-[0_0_20px_rgba(16,185,129,0.12)] bg-emerald-950/30 backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse shadow-[0_0_8px_#10b981]"></span>
             My Portfolio
           </div>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight max-w-xl">
-              Featured <span className="text-[#10b981]">Projects</span>
+              Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-[#10b981] to-teal-300">Projects</span>
             </h2>
             <p className="text-gray-400 text-sm md:text-base max-w-sm font-medium leading-relaxed">
-              A collection of live production platforms, full-stack systems, and machine learning models showcasing engineering precision and real-world impact.
+              A curated collection of live production platforms, full-stack systems, and machine learning models showcasing engineering precision and real-world impact.
             </p>
           </div>
         </div>
