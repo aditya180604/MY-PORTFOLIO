@@ -115,6 +115,26 @@ const ProjectCard = ({ title, tech, description, highlights, link, buttonText, i
 const Projects = () => {
   const projectList = [
     {
+      title: "TalentFlow AI — Autonomous AI HR & Recruitment Platform",
+      tech: ["React.js", "Node.js", "AI Voice Agent", "WebRTC & Proctoring", "Tailwind CSS", "RESTful APIs"],
+      description: "An end-to-end autonomous recruitment automation platform designed for HR teams and hiring managers. Recruiters upload or generate custom Job Descriptions, while the AI parses requirements, categorizes candidate pipelines, executes automated AI voice screening calls, conducts AI-proctored online interviews, and coordinates physical interview scheduling with automated candidate emails.",
+      highlights: [
+        "Automated JD Parsing & Candidate Categorization: Intelligently parses job descriptions, evaluates candidate skill profiles against specific requirements, and dynamically sorts candidates into structured hiring stages.",
+        "AI Outbound Voice Screening Calls: Deploys autonomous AI voice agents to place automated phone screening calls to candidates, collecting preliminary verbal answers and qualification signals.",
+        "AI-Proctored Video & In-Person Scheduling: Hosts interactive AI-evaluated online interviews with automated proctoring snapshots, while offering self-service calendar scheduling for both virtual and physical rounds.",
+        "Full Pipeline Communication: Automatically dispatches branded candidate emails, interview links, status transitions, and decision updates with zero manual overhead."
+      ],
+      metrics: [
+        { value: "AI Voice", label: "Outbound Calls" },
+        { value: "100%", label: "Proctored AI" },
+        { value: "End-to-End", label: "Auto Hiring" }
+      ],
+      link: "https://recruitment-agent-psi.vercel.app/",
+      buttonText: "Launch TalentFlow AI",
+      isLive: true,
+      featured: true
+    },
+    {
       title: "JobHuntt — Freshers & Off-Campus Careers Portal",
       tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "RESTful APIs"],
       description: "A high-impact, live production web platform engineered specifically for engineering graduates and freshers across India to discover verified off-campus recruitment drives, paid internships, and entry-level IT roles.",
